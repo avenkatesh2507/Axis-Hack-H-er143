@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Young+Serif&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    font-family: 'Young Serif', serif;
+  }
+}
+
+/* Hide scrollbars for the horizontal/diagonal scroller while keeping panning */
+.horizontal-scroller,
+.diagonal-scroller {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.horizontal-scroller::-webkit-scrollbar,
+.diagonal-scroller::-webkit-scrollbar {
+	cursor: grabbing;
+}
+
+/* Grid layout */
+.grid-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 24px;
+  padding: 40px;
+}
+
+/* Infinite vertical scroll */
+@keyframes infiniteScroll {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: infiniteScroll 25s linear infinite;
+}
