@@ -1,11 +1,13 @@
-from pymongo import MongoClient
-
+# db.py
 from dotenv import load_dotenv
 import os
+from pymongo import MongoClient
 
-load_dotenv(dotenv_path=".env")
+# Load environment variables from .env file
+load_dotenv()
 
-MONGO_URI = os.getenv("MONGO_URI")
-client = MongoClient(MONGO_URI, tls=True)
-db = client["axis_core"]
+MONGO_URI = os.getenv("MONGO_URI")  # put in .env
+client = MongoClient(MONGO_URI)
+
+db = client["Axis"]
 employees_collection = db["employees"]

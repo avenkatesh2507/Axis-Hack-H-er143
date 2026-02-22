@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
 import tasks from './tasks';
-import employees from './employees';
+import { fetchEmployees } from './employees';
 
 export default function TaskBoard() {
   const [taskList, setTaskList] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [recommendations, setRecommendations] = useState([]);
+  const [employees, setEmployees] = useState([]);
   const [formData, setFormData] = useState({
     name: '',
     dueDate: '',
@@ -13,14 +14,29 @@ export default function TaskBoard() {
     difficulty: 'Medium',
   });
 
-  // Load tasks from localStorage on mount
+  // Load tasks from localStorage on mount (only use defaults if localStorage is missing or corrupted, never overwrite localStorage after first mount)
   useEffect(() => {
-    const saved = localStorage.getItem('tasks');
-    if (saved) {
-      setTaskList(JSON.parse(saved));
+    let saved = localStorage.getItem('tasks');
+    let parsed = [];
+    let valid = false;
+    if (saved && saved !== 'undefined') {
+      try {
+        parsed = JSON.parse(saved);
+        if (Array.isArray(parsed)) {
+          valid = true;
+        }
+      } catch {}
+    }
+    if (valid) {
+      setTaskList(parsed);
     } else {
       setTaskList(tasks);
+      // Only set localStorage if it is missing or corrupted, not on every mount
+      if (!saved || saved === 'undefined') {
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+      }
     }
+    fetchEmployees().then(setEmployees).catch(() => setEmployees([]));
   }, []);
 
   // Save tasks to localStorage whenever they change
