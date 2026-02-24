@@ -77,7 +77,8 @@ MIT
 
 ## Authors
 - Aparna Venkatesh
-- Contributors
+- Sara Maria Ninan
+- Rajeswari Aruchanan Anand
 
 ---
 For questions or issues, open an issue on [GitHub](https://github.com/avenkatesh2507/Axis-Hack-H-er143.git).
